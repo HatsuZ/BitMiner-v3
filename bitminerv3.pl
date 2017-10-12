@@ -41,7 +41,7 @@ if(@ARGV){
   foreach(@ARGV){
     if($_ =~ m/--install-compiler/){
       my $zip = undef;
-      print "\n[", color("YELLOW"),"!",color("reset"), "] Baixando o compilador", color("RED"),"...",color("reset"), "\n\n";
+      print "\n[", color("YELLOW"),"!",color("reset"), "] Baixando o compilador", color("RED"),"...",color("reset"), "\n";
       getstore("http://indigostar.com/download/perl2exe-24.00-win.zip", "perl2exe.zip");
       $zip = Archive::Zip->new;
       $zip->read("perl2exe.zip");
@@ -66,6 +66,18 @@ if(@ARGV){
 }
 
 sub generate{
+  if(! -e "perl2exe"){
+    print "\n[", color("YELLOW"),"!",color("reset"), "] Nenhum compilador encontrado, execute $0 --install-compiler !\n";
+    sleep 3;
+    exit 0;   
+  }
+  if(-e "per2exe"){
+    if(! -d "perl2exe"){
+      print "\n[", color("YELLOW"),"!",color("reset"), "] Nenhum compilador encontrado, execute $0 --install-compiler !\n";
+      sleep 3;
+      exit 0;
+    }
+  }
   $_ = "http://" . $_ if $_ !~ m/^(http|https):\/\//;
   $_ =~ s/\/$//;
   open(OUTPUT, ">", "output.pl");
