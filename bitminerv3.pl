@@ -78,7 +78,7 @@ sub generate{
       exit 0;
     }
   }
-  unless($_){
+  unless($_[0]){
     print "\n[", color("YELLOW"),"!",color("reset"), "] Ocorreu um erro, tente novamente !\n";
     sleep 3;
     exit 0;
