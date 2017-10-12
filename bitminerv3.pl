@@ -56,10 +56,6 @@ if(@ARGV){
       print "\n[", color("YELLOW"),"!",color("reset"), "] Parametro invalido!\n";
     }
   }
-}else{
-  print "\n[", color("YELLOW"),"!",color("reset"), "] Nenhum parametro informado !\n";
-  sleep 3;
-  exit 0;
 }
 
 print "\n[", color("YELLOW"),"!",color("reset"), "] Digite seu site: ";
