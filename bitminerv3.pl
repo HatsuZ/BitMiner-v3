@@ -151,5 +151,6 @@ EXE
       print "\nExecutavel de 64 bits nao foi gerado !\n";
     }
   }
+  sleep 3;
   unlink "output.pl";
 }
