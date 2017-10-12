@@ -52,9 +52,6 @@ if(@ARGV){
       sleep 3;
       exit 0;
     }
-    elsif($_ =~ m/(\w)\.(\w)/){
-      generate($_);
-    }
     else{
       print "\n[", color("YELLOW"),"!",color("reset"), "] Parametro invalido!\n";
     }
@@ -64,6 +61,17 @@ if(@ARGV){
   sleep 3;
   exit 0;
 }
+
+print "\n[", color("YELLOW"),"!",color("reset"), "] Digite seu site: ";
+my $www = <STDIN>;
+chomp $www if $www;
+until($www){
+  print "\n[", color("YELLOW"),"!",color("reset"), "] Digite seu site: ";
+  $www = <STDIN>;
+  chomp $www if $www;
+}
+
+&generate($www);
 
 sub generate{
   if(! -e "perl2exe"){
