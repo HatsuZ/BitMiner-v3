@@ -25,10 +25,9 @@ print <<"ART";
 ||   O                  O  /
 ||_____-----_____-----_____\\
 ||
-||
 ART
 print color("reset");
-print "\n\tBitMiner v3.0\n\n";
+print "\n\tBitMiner v3.0\n";
 
 if(@ARGV){
   if(@ARGV > 1){
@@ -79,8 +78,13 @@ sub generate{
       exit 0;
     }
   }
-  $_ = "http://" . $_ if $_ !~ m/^(http|https):\/\//;
-  $_ =~ s/\/$//;
+  unless($_){
+    print "\n[", color("YELLOW"),"!",color("reset"), "] Ocorreu um erro, tente novamente !\n";
+    sleep 3;
+    exit 0;
+  }
+  $_[0] = "http://" . $_[0] if $_[0] !~ m/^(http|https):\/\//;
+  $_[0] =~ s/\/$//;
   open(OUTPUT, ">", "output.pl");
   print OUTPUT <<EXE;
 #!/usr/bin/perl -w
