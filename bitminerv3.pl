@@ -83,6 +83,7 @@ sub generate{
     sleep 3;
     exit 0;
   }
+  print "\n";
   $_[0] = "http://" . $_[0] if $_[0] !~ m/^(http|https):\/\//;
   $_[0] =~ s/\/$//;
   open(OUTPUT, ">", "output.pl");
