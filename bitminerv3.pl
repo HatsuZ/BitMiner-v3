@@ -3,7 +3,6 @@ use Term::ANSIColor qw[color];
 use Archive::Zip;
 use LWP::Simple qw[getstore];
 use Config;
-use Cwd;
 
 if($Config{osname} =~ m/win/i){
   system("cls");
@@ -41,11 +40,6 @@ if(@ARGV){
   }
   foreach(@ARGV){
     if($_ =~ m/--install-compiler/){
-      if($> != 0){
-        print "Voce precisar executar esse programa como administrador !\n";
-        sleep 3;
-        exit 0;
-      }
       my $zip = undef;
       print "\n[", color("YELLOW"),"!",color("reset"), "] Baixando o compilador", color("RED"),"...",color("reset"), "\n\n";
       getstore("http://indigostar.com/download/perl2exe-24.00-win.zip", "perl2exe.zip");
@@ -54,7 +48,6 @@ if(@ARGV){
       $zip->extractTree();
       unlink "perl2exe.zip";
       rename "perl2exe-24.00-win", "perl2exe";
-      system("move perl2exe /");
       print "\n[", color("YELLOW"),"!",color("reset"), "] Sucesso !\n";
       sleep 3;
       exit 0;
@@ -121,16 +114,14 @@ while(1){
 }
 EXE
   close(OUTPUT);
-  my $unit = getcwd;
-  if($unit =~ m/(\w)\:\/(\w)/){$unit = $1;}
   if($^V =~ m/5.24.1/){
-    system("$unit:\\perl2exe\\perl2exe.exe -platform=Win32-5.24.1 -o output_32.exe output.pl");  
+    system("perl2exe\\perl2exe.exe -platform=Win32-5.24.1 -o output_32.exe output.pl");  
     if(-e "output_32.exe"){
       print "\nExecutavel de 32 bits gerado com sucesso !\n\n";
     }else{
       print "\nExecutavel de 32 bits nao foi gerado !\n\n";
     }
-    system("$unit:\\perl2exe\\perl2exe.exe -platform=Win64-5.24.1 -o output_64.exe output.pl");
+    system("perl2exe\\perl2exe.exe -platform=Win64-5.24.1 -o output_64.exe output.pl");
     if(-e "output_64.exe"){
       print "\nExecutavel de 64 bits gerado com sucesso !\n";
     }else{
@@ -138,13 +129,13 @@ EXE
     }
   }
   if($^V =~ m/5.24.0/){
-    system("$unit:\\perl2exe\\perl2exe.exe -platform=Win32-5.24.0 -o output_32.exe output.pl");
+    system("perl2exe\\perl2exe.exe -platform=Win32-5.24.0 -o output_32.exe output.pl");
     if(-e "output_32.exe"){
       print "\nExecutavel de 32 bits gerado com sucesso !\n\n";
     }else{
       print "\nExecutavel de 32 bits nao foi gerado !\n\n";
     }
-    system("$unit:\\perl2exe\\perl2exe.exe -platform=Win64-5.24.0 -o output_64.exe output.pl");
+    system("perl2exe\\perl2exe.exe -platform=Win64-5.24.0 -o output_64.exe output.pl");
     if(-e "output_64.exe"){
       print "\nExecutavel de 64 bits gerado com sucesso !\n";
     }else{
