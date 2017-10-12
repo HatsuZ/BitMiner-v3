@@ -41,7 +41,7 @@ if(@ARGV){
   }
   foreach(@ARGV){
     if($_ =~ m/--install-compiler/){
-      unless($< == 0){
+      if($< == 0){
         print "Voce precisar executar esse programa como administrador !\n";
         sleep 3;
         exit 0;
