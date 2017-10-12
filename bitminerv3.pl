@@ -4,6 +4,7 @@ use Archive::Zip;
 use LWP::Simple qw[getstore];
 use Config;
 
+$SIG{INT} = 'IGNORE';
 if($Config{osname} =~ m/win/i){
   system("cls");
 }else{
@@ -11,26 +12,23 @@ if($Config{osname} =~ m/win/i){
 }
 
 print color("GREEN");
-print <<'ART';
-                ,____
-                |---.\
-        ___     |    `
-       / .-\  ./=)
-      |  |"|_/\/|
-      ;  |-;| /_|
-     / \_| |/ \ |
-    /      \/\( |
-    |   /  |` ) |
-    /   \ _/    |
-   /--._/  \    |
-   `/|)    |    /
-     /     |   |
-   .'      |   |
-  /         \  |
- (_.-.__.__./  /
+print <<"ART";
+\n/\\
+||_____-----_____-----_____
+||   O                  O  \\
+||    O\\\\    ___    //O    /
+||       \\\\ /   \\//        \\
+||         |_O O_|         /
+||          ^ | ^          \\
+||        // UUU \\\\        /
+||    O//            \\\\O   \\
+||   O                  O  /
+||_____-----_____-----_____\\
+||
+||
 ART
 print color("reset");
-print "\n  BitMiner v3.0\n\n";
+print "\n\tBitMiner v3.0\n\n";
 
 if(@ARGV){
   if(@ARGV > 1){
