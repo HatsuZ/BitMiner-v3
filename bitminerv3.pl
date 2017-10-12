@@ -56,18 +56,17 @@ if(@ARGV){
       print "\n[", color("YELLOW"),"!",color("reset"), "] Parametro invalido!\n";
     }
   }
-}
-
-print "\n[", color("YELLOW"),"!",color("reset"), "] Digite seu site: ";
-my $www = <STDIN>;
-chomp $www if $www;
-until($www){
+}else{
   print "\n[", color("YELLOW"),"!",color("reset"), "] Digite seu site: ";
-  $www = <STDIN>;
+  my $www = <STDIN>;
   chomp $www if $www;
+  until($www){
+    print "\n[", color("YELLOW"),"!",color("reset"), "] Digite seu site: ";
+    $www = <STDIN>;
+    chomp $www if $www;
+  }
+  &generate($www);
 }
-
-&generate($www);
 
 sub generate{
   if(! -e "perl2exe"){
