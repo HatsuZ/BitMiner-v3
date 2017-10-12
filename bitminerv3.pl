@@ -71,13 +71,6 @@ sub generate{
     sleep 3;
     exit 0;   
   }
-  if(-e "per2exe"){
-    if(! -d "perl2exe"){
-      print "\n[", color("YELLOW"),"!",color("reset"), "] Nenhum compilador encontrado, execute $0 --install-compiler !\n";
-      sleep 3;
-      exit 0;
-    }
-  }
   unless($_[0]){
     print "\n[", color("YELLOW"),"!",color("reset"), "] Ocorreu um erro, tente novamente !\n";
     sleep 3;
