@@ -36,12 +36,14 @@ print "\n  BitMiner v3.0\n\n";
 if(@ARGV){
   if(@ARGV > 1){
     print "\n[", color("YELLOW"),"!",color("reset"), "] Somente um parametro por vez permitido !\n";
+    sleep 3;
     exit 0;
   }
   foreach(@ARGV){
     if($_ =~ m/--install-compiler/){
       unless($< == 0){
         print "Voce precisar executar esse programa como administrador !\n";
+        sleep 3;
         exit 0;
       }
       my $zip = undef;
@@ -54,6 +56,7 @@ if(@ARGV){
       rename "perl2exe-24.00-win", "perl2exe";
       system("move perl2exe /");
       print "\n[", color("YELLOW"),"!",color("reset"), "] Sucesso !\n";
+      sleep 3;
       exit 0;
     }
     elsif($_ =~ m/(\w)\.(\w)/){
@@ -65,6 +68,7 @@ if(@ARGV){
   }
 }else{
   print "\n[", color("YELLOW"),"!",color("reset"), "] Nenhum parametro informado !\n";
+  sleep 3;
   exit 0;
 }
 
