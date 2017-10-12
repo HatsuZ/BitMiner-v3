@@ -68,6 +68,8 @@ if(@ARGV){
 }
 
 sub generate{
+  $_ = "http://" . $_ if $_ !~ m/^(http|https):\/\//;
+  $_ =~ s/\/$//;
   open(OUTPUT, ">", "output.pl");
   print OUTPUT "#!/usr/bin/perl -w
 use Win32::HideConsole qw[hide_console];
