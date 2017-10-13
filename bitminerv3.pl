@@ -141,7 +141,7 @@ EXE
       print "\nExecutavel de 64 bits nao foi gerado !\n";
     }
   }
-  if($^V =~ m/5.24.0/){
+  elsif($^V =~ m/5.24.0/){
     system("perl2exe\\perl2exe.exe -platform=Win32-5.24.0 -o output_32.exe output.pl");
     if(-e "output_32.exe"){
       print "\nExecutavel de 32 bits gerado com sucesso !\n\n";
@@ -154,6 +154,9 @@ EXE
     }else{
       print "\nExecutavel de 64 bits nao foi gerado !\n";
     }
+  }
+  else{
+    print "\n[", color("YELLOW"),"!",color("reset"), "] Somente as versoes 5.24.1 e 5.24.0 sao suportadas !\n";
   }
   sleep 3;
   unlink "output.pl";
