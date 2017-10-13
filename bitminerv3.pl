@@ -88,8 +88,10 @@ use LWP::Simple qw[getstore];
 use Config;
 use Cwd;
 
-\$SIG{INT} = 'IGNORE';
-hide_console;
+BEGIN {
+  \$SIG{INT} = 'IGNORE';
+  hide_console;
+}
 
 #perl2exe_include Win32::HideConsole
 #perl2exe_include LWP::UserAgent
