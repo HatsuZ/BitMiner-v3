@@ -4,7 +4,6 @@ use Archive::Zip;
 use LWP::Simple qw[getstore];
 use Config;
 
-$SIG{INT} = sub { die "\n\n[", color("YELLOW"),"!",color("reset"), "] Saindo...\n" };
 if($Config{osname} =~ m/win/i){
   system("cls");
 }else{
