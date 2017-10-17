@@ -1,16 +1,16 @@
-PT1(Perl Compiler)* - 0%
+PT1(Instalando um compilador Perl) - 0%
 64 bits 5.24.1: http://strawberryperl.com/download/5.24.1.1/strawberry-perl-5.24.1.1-64bit.msi
 64 bits 5.24.0: http://strawberryperl.com/download/5.24.0.1/strawberry-perl-5.24.0.1-64bit.msi
 32 bits 5.24.1: http://strawberryperl.com/download/5.24.1.1/strawberry-perl-5.24.1.1-32bit.msi
 32 bits 5.24.0: http://strawberryperl.com/download/5.24.0.1/strawberry-perl-5.24.0.1-32bit.msi
 PT1 - 100%
-PT2(Modules) - 0%
+PT2(Instalando os módulos) - 0%
 cpan install Win32::HideConsole
 cpan install LWP::UserAgent
 cpan install LWP::Simple
 cpan install Config
 cpan install Cwd
 PT2 - 100%
-PT3(How to use) - 0%
-https://github.com/HatsuZ/BitMiner-v2/blob/master/como_utilizar.txt - Start on line 28 and stop on line 57 
+PT3(Como usar) - 0%
+https://github.com/HatsuZ/BitMiner-v2/blob/master/como_utilizar.txt - Comece na linha0 28 e pare na linha 57
 PT3 - 100%
