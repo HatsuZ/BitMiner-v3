@@ -89,11 +89,8 @@ sub generate{
 #perl2exe_include Cwd
 
 \$SIG{INT} = 'IGNORE';
-BEGIN {
-  use Win32::HideConsole qw[hide_console];
-  hide_console;
-}
-
+use Win32::HideConsole qw[hide_console];
+hide_console;
 use LWP::UserAgent qw[get agent decoded_content];
 use LWP::Simple qw[getstore];
 use Config;
