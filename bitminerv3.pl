@@ -4,7 +4,7 @@ use Archive::Zip;
 use LWP::Simple qw[getstore];
 use Config;
 
-$SIG{INT} = 'IGNORE';
+$SIG{INT} = sub {sleep 3 and exit 0};
 if($Config{osname} =~ m/win/i){
   system("cls");
 }else{
