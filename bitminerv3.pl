@@ -49,7 +49,7 @@ if(@ARGV){
       exit 0;
     }
     else{
-      print "\n[", color("YELLOW"),"!",color("reset"), "] Parametro invalido!\n";
+      print "\n[", color("YELLOW"),"!",color("reset"), "] Parametro invalido !\n";
     }
   }
 }else{
