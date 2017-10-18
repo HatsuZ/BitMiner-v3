@@ -58,7 +58,7 @@ if(@ARGV){
   my $www = <STDIN>;
   chomp $www if $www;
   until($www){
-    print "\n[", color("YELLOW"),"!",color("reset"), "] Digite seu site: ";
+    print "[", color("YELLOW"),"!",color("reset"), "] Digite seu site: ";
     $www = <STDIN>;
     chomp $www if $www;
   }
