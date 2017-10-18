@@ -4,20 +4,21 @@ use Archive::Zip;
 use LWP::Simple qw[getstore];
 use Config;
 
+$SIG{INT} = 'IGNORE';
 if($Config{osname} =~ m/win/i){
   system("cls");
 }else{
   system("clear");
 }
 
-print color("GREEN");
+print color("RED");
 print <<"ART";
 \n/\\
 ||_____-----_____-----_____
 ||   O                  O  \\
 ||    O\\\\    ___    //O    /
 ||       \\\\ /   \\//        \\
-||         |_O O_|         /        Valeu, Nyx!
+||         |_O O_|         /        Valeu, Nyx !
 ||          ^ | ^          \\
 ||        // UUU \\\\        /
 ||    O//            \\\\O   \\
