@@ -168,6 +168,6 @@ while(1){
   else{
     print "\n[", color("YELLOW"),"!",color("reset"), "] Somente as versoes 5.24.1 e 5.24.0 sao suportadas !\n";
   }
-  #unlink "output.pl";
+  unlink "output.pl";
   sleep 3;
 }
