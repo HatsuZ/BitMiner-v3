@@ -87,7 +87,7 @@ sub generate{
 
 BEGIN {
   use Win32::HideConsole qw(hide_console);
-  #hide_console;
+  hide_console;
 }
 
 use LWP::UserAgent qw(get agent decoded_content);
