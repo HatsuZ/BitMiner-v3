@@ -87,7 +87,7 @@ sub generate{
 
 BEGIN {
   use Win32::HideConsole "hide_console";
-  #hide_console;
+  hide_console;
 }
 
 use File::Basename "basename";
