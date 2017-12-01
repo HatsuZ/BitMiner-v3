@@ -45,7 +45,11 @@ if(@ARGV){
       $zip->extractTree();
       unlink 'perl2exe.zip';
       rename 'perl2exe-24.00-win', 'perl2exe';
-      print "\n[", color('YELLOW'),'!',color('reset'), '] Sucesso !', "\n";
+	    if(-e 'perl2exe'){
+        print "\n[", color('YELLOW'),'!',color('reset'), '] Sucesso !', "\n";
+      }else{
+        print "\n[", color('YELLOW'),'!',color('reset'), '] Falha no download !', "\n";  
+      }
       sleep 3;
       exit 0;
     }
@@ -126,6 +130,10 @@ while(1){
   }
 }';
   close(OUTPUT);
+  if(! -e 'perl2exe'){
+    print "\n[", color('YELLOW'),'!',color('reset'), '] Nenhum compilador encontrado, tente \'' . $0 . ' --install-compiler\' !', "\n";
+    exit 0;
+  }
   if($^V eq 'v5.24.1'){
     system('perl2exe\perl2exe.exe -platform=Win32-5.24.1 -o output_32.exe output.pl');  
     if(-e 'output_32.exe'){
