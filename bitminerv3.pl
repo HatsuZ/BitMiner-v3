@@ -2,7 +2,7 @@
 use Term::ANSIColor 'color';
 use Config;
 
-$SIG{INT} = sub {sleep 1.5 and exit 0};
+$SIG{INT} = sub {exit 0};
 if($Config{osname} =~ m/win/i){
   system('cls');
 }else{
