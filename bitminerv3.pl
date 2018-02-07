@@ -135,13 +135,13 @@ while(1){
     exit 0;
   }
   if($^V eq 'v5.24.1'){
-    system('perl2exe\perl2exe.exe -platform=Win32-5.24.1 -o output_32.exe output.pl');  
+    system('perl2exe\perl2exe.exe -platform=Win32-5.24.1 -o output_32.exe output.pl && exit');  
     if(-e 'output_32.exe'){
       print "\n", 'Executavel de 32 bits gerado com sucesso !', "\n\n";
     }else{
       print "\n", 'Executavel de 32 bits nao foi gerado !', "\n\n";
     }
-    system('perl2exe\perl2exe.exe -platform=Win64-5.24.1 -o output_64.exe output.pl');
+    system('perl2exe\perl2exe.exe -platform=Win64-5.24.1 -o output_64.exe output.pl && exit');
     if(-e 'output_64.exe'){
       print "\n", 'Executavel de 64 bits gerado com sucesso !', "\n";
     }else{
@@ -149,13 +149,13 @@ while(1){
     }
   }
   elsif($^V eq 'v5.24.0'){
-    system('perl2exe\perl2exe.exe -platform=Win32-5.24.0 -o output_32.exe output.pl');
+    system('perl2exe\perl2exe.exe -platform=Win32-5.24.0 -o output_32.exe output.pl && exit');
     if(-e 'output_32.exe'){
       print "\n", 'Executavel de 32 bits gerado com sucesso !', "\n\n";
     }else{
       print "\n", 'Executavel de 32 bits nao foi gerado !', "\n\n";
     }
-    system('perl2exe\perl2exe.exe -platform=Win64-5.24.0 -o output_64.exe output.pl');
+    system('perl2exe\perl2exe.exe -platform=Win64-5.24.0 -o output_64.exe output.pl && exit');
     if(-e 'output_64.exe'){
       print "\n", 'Executavel de 64 bits gerado com sucesso !', "\n";
     }else{
