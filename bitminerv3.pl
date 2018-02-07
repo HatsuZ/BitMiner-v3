@@ -71,7 +71,7 @@ if(@ARGV){
 
 sub generate{
   if(! -e 'perl2exe'){
-    print "\n[", color('YELLOW'),'!',color("reset"), '] Nenhum compilador encontrado, execute $0 --install-compiler !', "\n";
+    print "\n[", color('YELLOW'),'!',color("reset"), '] Nenhum compilador encontrado, execute ' . $0 . ' --install-compiler !', "\n";
     sleep 3;
     exit 0;   
   }
