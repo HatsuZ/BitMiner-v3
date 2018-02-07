@@ -3,11 +3,7 @@ use Term::ANSIColor 'color';
 use Config;
 
 $SIG{INT} = sub {exit 0};
-if($Config{osname} =~ m/win/i){
-  system('cls');
-}else{
-  system('clear');
-}
+system('cls');
 
 print color('RED');
 print <<"ART";
